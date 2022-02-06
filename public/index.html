@@ -45,6 +45,8 @@
 
                 const sendPositionButton = document.getElementById('SendPositionButton');
                 const sendPositionResponse = document.getElementById('send-position-response');
+                const submitMessageButton = document.getElementById('submit-message-button');
+                const typedMessage = document.getElementById('typed-message');
 
 
                 sendPositionButton.onclick = async() => {
@@ -55,14 +57,33 @@
                         },
                         body: JSON.stringify(data)
                     };
-                    // sending a fetch post request to the /api endpoint
+                    // sends a fetch post request to the /api endpoint
                     // Able to use await here because the enveloping function is set as async
                     const response = await fetch('/api', options);
-                    const json = await response.json()
-                    sendPositionResponse.textContent = json.message;
+                    const obj = await response.json()
+                    sendPositionResponse.textContent = obj.message;
 
                 }
 
+
+                submitMessageButton.onclick = async() => {
+                    let message = typedMessage.value;
+                    const data = {
+                        message
+                    }
+                    const options = {
+                        method: "Post",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    }
+                    const response = await fetch('/msg', options);
+                    const obj = await response.json();
+                    // .json() method takes JSON and turns it into a javascript object
+                    console.log(obj);
+
+                }
 
 
 
@@ -90,8 +111,8 @@
     <p>latitude: <span id="latitude"></span>&deg;<br/>longitude: <span id="longitude"></span>&deg;<br/></p>
     <button id="SendPositionButton">Send position data</button>
     <p>Response from server: <span id="send-position-response"></span></p>
-
-
+    <input type="text" id="typed-message">
+    <input type="submit" value="Submit" id="submit-message-button">
 
     <div id="map"></div>
     <script>

@@ -51,5 +51,23 @@ function addToFile(_filename, _data) {
 }
 
 
+app.post('/msg', (request, response) => {
+    // handle the post request
+    console.log("I got a msg!")
+    const data = request.body;
+    const timeNow = Date.now();
+    data.timestamp = timeNow;
+
+    database.insert(data);
+
+    // send a response back to client
+    response.json({
+        reply: "Recorded in database, time: " + data.timestamp,
+        message: data.message,
+    });
+});
+
+
 
 // untill https://www.youtube.com/watch?v=3ls013DBcww&ab_channel=TheCodingTrain
+// untill https://youtu.be/q-lUgFxwjEM (lesson 2.5)
