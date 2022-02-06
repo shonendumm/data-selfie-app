@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const fs = require('fs')
+const Datastore = require('nedb');
 
 require('dotenv').config()
     // console.log(process.env.map_accessToken);
@@ -9,10 +10,10 @@ app.listen(3000, () => console.log('listening at 3000'));
 app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 
-// app.use(express.static(__dirname + '/public'));
-// app.get('/', (req, res) => {
-//     res.send('Hello World!')
-// })
+const database = new Datastore('database.db');
+database.loadDatabase();
+// database.insert({ name: 'soohian', status: '💪' });
+// database.insert({ name: 'soohian', status: '💡' });
 
 const userDataArray = []
 
@@ -20,11 +21,16 @@ app.post('/api', (request, response) => {
     // handle the post request
     console.log("I got a post request!")
     const data = request.body;
+    const timeNow = Date.now();
+    data.timestamp = timeNow;
+
     // write to file
-    addToFile("user_data.json", JSON.stringify(data));
+    // addToFile("user_data.json", JSON.stringify(data));
     // save to user data array
-    userDataArray.push(data);
-    console.log("user data array saved", data)
+    // userDataArray.push(data);
+
+    database.insert(data);
+    console.log(database);
 
     // send a response back to client
     response.json({
