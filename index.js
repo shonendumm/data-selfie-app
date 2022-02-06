@@ -34,7 +34,7 @@ app.post('/api', (request, response) => {
 
     // send a response back to client
     response.json({
-        message: 'Send back to client!',
+        message: "Recorded in database, time: " + data.timestamp,
         latitude: data.lat,
         longitude: data.long
     });

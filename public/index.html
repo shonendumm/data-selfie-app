@@ -42,7 +42,11 @@
                     timestamp
                 }
 
-                const sendPositionButton = document.getElementById('SendPositionButton')
+
+                const sendPositionButton = document.getElementById('SendPositionButton');
+                const sendPositionResponse = document.getElementById('send-position-response');
+
+
                 sendPositionButton.onclick = async() => {
                     const options = {
                         method: "POST",
@@ -54,9 +58,12 @@
                     // sending a fetch post request to the /api endpoint
                     // Able to use await here because the enveloping function is set as async
                     const response = await fetch('/api', options);
-                    const json = await response.json();
-                    console.log(json)
+                    const json = await response.json()
+                    sendPositionResponse.textContent = json.message;
+
                 }
+
+
 
 
                 // const map = L.map('map').setView([lat, long], 15);
@@ -82,6 +89,7 @@
     </h1>
     <p>latitude: <span id="latitude"></span>&deg;<br/>longitude: <span id="longitude"></span>&deg;<br/></p>
     <button id="SendPositionButton">Send position data</button>
+    <p>Response from server: <span id="send-position-response"></span></p>
 
 
 
