@@ -40,6 +40,9 @@ app.post('/api', (request, response) => {
     });
 });
 
+
+// This is the same function as saving to nedb database. Except that one is saved with id
+// We can probably also generate an id, a consecutive one id++ or something hashed?
 function addToFile(_filename, _data) {
     fs.appendFile(_filename, _data + "\n",
         (err) => {
