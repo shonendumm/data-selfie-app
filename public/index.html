@@ -23,9 +23,7 @@
 </head>
 
 <body>
-    <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+
     <script>
         if ('geolocation' in navigator) {
             console.log('geolocation is available');
@@ -44,8 +42,8 @@
                     timestamp
                 }
 
-                const sendDataButton = document.getElementById('SendDataButton')
-                sendDataButton.onclick = async() => {
+                const sendPositionButton = document.getElementById('SendPositionButton')
+                sendPositionButton.onclick = async() => {
                     const options = {
                         method: "POST",
                         headers: {
@@ -83,7 +81,7 @@
         Data Selfie App
     </h1>
     <p>latitude: <span id="latitude"></span>&deg;<br/>longitude: <span id="longitude"></span>&deg;<br/></p>
-    <button id="SendDataButton">Send position data</button>
+    <button id="SendPositionButton">Send position data</button>
 
 
 

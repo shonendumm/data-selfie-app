@@ -1,10 +1,9 @@
 const express = require('express');
-const res = require('express/lib/response');
 const app = express();
 const fs = require('fs')
 
 require('dotenv').config()
-
+    // console.log(process.env.map_accessToken);
 
 app.listen(3000, () => console.log('listening at 3000'));
 app.use(express.static('public'));
@@ -20,7 +19,6 @@ const userDataArray = []
 app.post('/api', (request, response) => {
     // handle the post request
     console.log("I got a post request!")
-    console.log(request.body);
     const data = request.body;
     // write to file
     addToFile("user_data.json", JSON.stringify(data));
@@ -30,7 +28,7 @@ app.post('/api', (request, response) => {
 
     // send a response back to client
     response.json({
-        status: 'success!',
+        message: 'Send back to client!',
         latitude: data.lat,
         longitude: data.long
     });
