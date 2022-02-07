@@ -23,6 +23,27 @@
 </head>
 
 <body>
+    <img src="" id="rainbow" width="480px">
+    <script>
+        // script to display rainbow async
+        catchRainbow();
+
+        async function catchRainbow() {
+            const response = await fetch('rainbow.jpg');
+            console.log(response);
+            const blob = await response.blob()
+            const rainbow = document.getElementById("rainbow");
+            rainbow.src = URL.createObjectURL(blob);
+        }
+
+        // non-async await way of writing async functions; using .then()
+        const response = fetch('exampleText.txt').then(response => {
+            return response.blob();
+        }).then(blob => {
+            return blob.text();
+        }).then(text => console.log(text));
+    </script>
+
 
     <script>
         if ('geolocation' in navigator) {
