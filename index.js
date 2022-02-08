@@ -10,6 +10,8 @@ app.listen(3000, () => console.log('listening at 3000'));
 app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 
+
+
 const database = new Datastore('database.db');
 database.loadDatabase();
 // database.insert({ name: 'soohian', status: '💪' });
@@ -21,6 +23,7 @@ app.post('/api', (request, response) => {
     // handle the post request
     console.log("I got a post request!")
     const data = request.body;
+    console.log("request body:", data);
     const timeNow = Date.now();
     data.timestamp = timeNow;
 
@@ -30,13 +33,10 @@ app.post('/api', (request, response) => {
     // userDataArray.push(data);
 
     database.insert(data);
-    console.log(database);
 
-    // send a response back to client
+    // send a json response back to client
     response.json({
-        message: "Recorded in database, time: " + data.timestamp,
-        latitude: data.lat,
-        longitude: data.long
+        message: "Saved in database: " + data.mood
     });
 });
 
@@ -49,23 +49,6 @@ function addToFile(_filename, _data) {
             if (err) { console.log(err) }
         })
 }
-
-
-app.post('/msg', (request, response) => {
-    // handle the post request
-    console.log("I got a msg!")
-    const data = request.body;
-    const timeNow = Date.now();
-    data.timestamp = timeNow;
-
-    database.insert(data);
-
-    // send a response back to client
-    response.json({
-        reply: "Recorded in database, time: " + data.timestamp,
-        message: data.message,
-    });
-});
 
 
 

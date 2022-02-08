@@ -53,24 +53,25 @@
                 console.log(position);
                 const lat = position.coords.latitude;
                 const long = position.coords.longitude;
-                const timestamp = position.timestamp;
                 document.getElementById('latitude').textContent = lat;
                 document.getElementById('longitude').textContent = long;
 
-                const data = {
-                    lat,
-                    long,
-                    timestamp
-                }
-
-
-                const sendPositionButton = document.getElementById('SendPositionButton');
-                const sendPositionResponse = document.getElementById('send-position-response');
-                const submitMessageButton = document.getElementById('submit-message-button');
                 const typedMessage = document.getElementById('typed-message');
 
 
-                sendPositionButton.onclick = async() => {
+
+                const submitButton = document.getElementById('submit-button');
+                const sendPositionResponse = document.getElementById('send-position-response');
+
+                submitButton.onclick = async() => {
+
+                    const mood = typedMessage.value;
+                    const data = {
+                        lat,
+                        long,
+                        mood
+                    }
+
                     const options = {
                         method: "POST",
                         headers: {
@@ -81,30 +82,12 @@
                     // sends a fetch post request to the /api endpoint
                     // Able to use await here because the enveloping function is set as async
                     const response = await fetch('/api', options);
-                    const obj = await response.json()
-                    sendPositionResponse.textContent = obj.message;
+                    // turns the response to json object
+                    const jsonObj = await response.json()
+                    sendPositionResponse.textContent = jsonObj.message;
 
                 }
 
-
-                submitMessageButton.onclick = async() => {
-                    let message = typedMessage.value;
-                    const data = {
-                        message
-                    }
-                    const options = {
-                        method: "Post",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(data)
-                    }
-                    const response = await fetch('/msg', options);
-                    const obj = await response.json();
-                    // .json() method takes JSON and turns it into a javascript object
-                    console.log(obj);
-
-                }
 
 
 
@@ -130,11 +113,11 @@
         Data Selfie App
     </h1>
     <p>latitude: <span id="latitude"></span>&deg;<br/>longitude: <span id="longitude"></span>&deg;<br/></p>
-    <button id="SendPositionButton">Send position data</button>
-    <p>Response from server: <span id="send-position-response"></span></p>
-    <input type="text" id="typed-message">
-    <input type="submit" value="Submit" id="submit-message-button">
 
+    <input type="text" id="typed-message">
+    <input type="submit" value="Submit" id="submit-button">
+
+    <p><span id="send-position-response"></span></p>
     <div id="map"></div>
     <script>
     </script>
