@@ -84,7 +84,9 @@
                     const response = await fetch('/api', options);
                     // turns the response to json object
                     const jsonObj = await response.json()
-                    sendPositionResponse.textContent = jsonObj.message;
+                    console.log(jsonObj);
+                    typedMessage.value = "";
+                    // sendPositionResponse.textContent = jsonObj.mood;
 
                 }
 

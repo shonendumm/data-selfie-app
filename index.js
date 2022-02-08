@@ -21,23 +21,22 @@ const userDataArray = []
 
 app.post('/api', (request, response) => {
     // handle the post request
-    console.log("I got a post request!")
     const data = request.body;
-    console.log("request body:", data);
     const timeNow = Date.now();
     data.timestamp = timeNow;
+    database.insert(data);
+
+
+
+    // send a json response back to client
+    response.json(data);
 
     // write to file
     // addToFile("user_data.json", JSON.stringify(data));
     // save to user data array
     // userDataArray.push(data);
 
-    database.insert(data);
 
-    // send a json response back to client
-    response.json({
-        message: "Saved in database: " + data.mood
-    });
 });
 
 
