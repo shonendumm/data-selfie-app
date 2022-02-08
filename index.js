@@ -26,7 +26,7 @@ app.get('/api', (request, response) => {
             response.end();
             return;
         }
-        response.json({ data });
+        response.json(data);
     })
 
 })

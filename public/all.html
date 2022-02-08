@@ -24,7 +24,23 @@
         async function getData() {
             const response = await fetch('/api');
             const json = await response.json()
-            console.log(json.data);
+            console.log(json);
+
+            for (item of json) {
+                const root = document.createElement('div');
+                const mood = document.createElement('div');
+                const geo = document.createElement('div');
+                const date = document.createElement('div');
+
+                mood.textContent = `mood: ${item.mood}`;
+                geo.textContent = `${item.lat} ; ${item.long}`;
+                const dateString = new Date(item.timestamp).toLocaleString();
+                date.textContent = dateString
+
+                root.append(mood, geo, date);
+                document.body.append(root);
+            }
+
         }
     </script>
 
