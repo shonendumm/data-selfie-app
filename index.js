@@ -2,11 +2,16 @@ const express = require('express');
 const app = express();
 const fs = require('fs')
 const Datastore = require('nedb');
+require('dotenv').config();
+// console.log(process.env.map_accessToken);
 
-require('dotenv').config()
-    // console.log(process.env.map_accessToken);
 
-app.listen(3000, () => console.log('listening at 3000'));
+// process.env.PORT refers to the env port wherever this is run
+// if there's one, use it, else use 3000
+const port = process.env.PORT || 3000;
+
+
+app.listen(port, () => console.log('listening at ${port}'));
 app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 
@@ -60,3 +65,6 @@ function addToFile(_filename, _data) {
 
 // untill https://www.youtube.com/watch?v=3ls013DBcww&ab_channel=TheCodingTrain
 // untill https://youtu.be/q-lUgFxwjEM (lesson 2.5)
+
+
+// untill https://www.youtube.com/watch?v=Rz886HkV1j4&ab_channel=TheCodingTrain (3.5 deployment)
