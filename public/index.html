@@ -92,40 +92,41 @@
 
         submitButton.onclick = async() => {
 
-            const mood = typedMessage.value;
-            const data = {
-                lat,
-                long,
-                mood
+                const mood = typedMessage.value;
+                const data = {
+                    lat,
+                    long,
+                    mood
+                }
+
+                const options = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                };
+                // sends a fetch post request to the /api endpoint
+                // Able to use await here because the enveloping function is set as async
+                const response = await fetch('/api', options);
+                // turns the response to json object
+                const jsonObj = await response.json()
+                console.log(jsonObj);
+                typedMessage.value = "";
+                sendPositionResponse.textContent = "Mood recorded: " + jsonObj.mood;
+
             }
+            // require('dotenv').config();
 
-            const options = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            };
-            // sends a fetch post request to the /api endpoint
-            // Able to use await here because the enveloping function is set as async
-            const response = await fetch('/api', options);
-            // turns the response to json object
-            const jsonObj = await response.json()
-            console.log(jsonObj);
-            typedMessage.value = "";
-            sendPositionResponse.textContent = "Mood recorded: " + jsonObj.mood;
-
-        }
-
-        // const map = L.map('map').setView([lat, long], 15);
-        // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        //     maxZoom: 18,
-        //     // id: 'mapbox/streets-v11',
-        //     tileSize: 512,
-        //     zoomOffset: -1
-        //         // accessToken: 'your.mapbox.access.token'
-        // }).addTo(map);
+        const map = L.map('map').setView([lat, long], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 18,
+            // id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1
+                // accessToken: process.env.map_accessToken
+        }).addTo(map);
     </script>
 
 </body>
