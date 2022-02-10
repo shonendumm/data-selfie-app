@@ -35,7 +35,7 @@
                 mood.textContent = `mood: ${item.mood}`;
                 geo.textContent = `${item.lat} ; ${item.long}`;
                 const dateString = new Date(item.timestamp).toLocaleString();
-                date.textContent = dateString
+                date.textContent = dateString;
 
                 root.append(mood, geo, date);
                 document.body.append(root);
@@ -43,6 +43,7 @@
 
         }
     </script>
+    <p>Link to <a href="index.html">index</a></p>
 
 </body>
 

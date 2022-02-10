@@ -33,9 +33,9 @@
     <input type="submit" value="Submit" id="submit-button">
 
     <p><span id="send-position-response"></span></p>
+    <p>Link to <a href="all.html">all</a></p>
+
     <div id="map"></div>
-
-
 
     <script>
         // script to display rainbow async
@@ -113,7 +113,7 @@
             const jsonObj = await response.json()
             console.log(jsonObj);
             typedMessage.value = "";
-            // sendPositionResponse.textContent = jsonObj.mood;
+            sendPositionResponse.textContent = "Mood recorded: " + jsonObj.mood;
 
         }
 
