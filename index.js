@@ -66,5 +66,7 @@ function addToFile(_filename, _data) {
 // untill https://www.youtube.com/watch?v=3ls013DBcww&ab_channel=TheCodingTrain
 // untill https://youtu.be/q-lUgFxwjEM (lesson 2.5)
 
-
 // untill https://www.youtube.com/watch?v=Rz886HkV1j4&ab_channel=TheCodingTrain (3.5 deployment)
+// untill https://www.youtube.com/watch?v=nZaZ2dB6pow&list=PLRqwX-V7Uu6YxDKpFzf_2D84p0cyk4T7X&index=7&ab_channel=TheCodingTrain (check in on the map)
+
+// https://www.youtube.com/watch?v=9Rhsb3GU2Iw&list=PLRqwX-V7Uu6YxDKpFzf_2D84p0cyk4T7X&index=14&ab_channel=TheCodingTrain
