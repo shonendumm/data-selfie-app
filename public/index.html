@@ -68,6 +68,27 @@
         //     },
         // };
 
+        // async() => {
+        //     const test = await delay(10000);
+        //     console.log("test2:", test);
+        // };
+
+        // this works...but not much delay
+        delay(10000).then((response) => console.log("Returned after 10 seconds"))
+            // console.log("test:", test);
+
+        function delay(time) {
+            return new Promise((resolve, reject) => {
+                if (isNaN(time)) {
+                    reject("time cannot be negative")
+                }
+                setTimeout(resolve, time);
+            })
+        }
+        // resolve, not resolve(); else no delay
+
+
+
 
         if ('geolocation' in navigator) {
             console.log('geolocation is available');
