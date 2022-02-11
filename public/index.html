@@ -68,23 +68,29 @@
         //     },
         // };
 
-        // async() => {
-        //     const test = await delay(10000);
-        //     console.log("test2:", test);
-        // };
 
-        // this works...but not much delay
-        delay(10000).then((response) => console.log("Returned after 10 seconds"))
-            // console.log("test:", test);
-
-        function delay(time) {
+        // must be declared before calling the function, it's not hoisted up
+        const delay = (time) => {
             return new Promise((resolve, reject) => {
                 if (isNaN(time)) {
-                    reject("time cannot be negative")
+                    reject(Error("time must be a number!"));
                 }
                 setTimeout(resolve, time);
             })
-        }
+        };
+
+
+        delay(10000).then((response) => console.log("Returned after 10 seconds"))
+            // console.log("test:", test);
+
+        // function delay(time) {
+        //     return new Promise((resolve, reject) => {
+        //         if (isNaN(time)) {
+        //             reject(Error("time cannot be negative"))
+        //         }
+        //         setTimeout(resolve, time);
+        //     })
+        // }
         // resolve, not resolve(); else no delay
 
 
