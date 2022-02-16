@@ -8,7 +8,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js" integrity="sha512-P/Je1zlTfRugG4aRZRx9hYRVph2CkbpchkgP6ub1gNF/VNHDUNq0/WOY0CSLMmwEXxrQ7HohFmMenWGpx8ZzvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.js" integrity="sha512-on+Vjx6pkQ27deEPRDWBzaT7qKOG/tjLYq1Zm+1sL9/HL7jkVXOwEbZueZJFpZTQdguMIAp5D8Ewr9DLrvkmww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Data Selfie App</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -24,10 +26,11 @@
 </head>
 
 <body>
-    <img src="" id="rainbow" width="480px">
+    <!-- <img src="" id="rainbow" width="480px"> -->
     <h1>
         Data Selfie App
     </h1>
+    <div id="map"></div>
     <p>latitude: <span id="latitude"></span>&deg;<br/>longitude: <span id="longitude"></span>&deg;<br/></p>
 
     <input type="text" id="typed-message">
@@ -36,134 +39,152 @@
     <p><span id="send-position-response"></span></p>
     <p>Link to <a href="all.html">all</a></p>
 
-    <div id="map"></div>
 
     <script>
-        // script to display rainbow async
-        catchRainbow();
+        // p5.js setup function runs everytime the window is loaded
+        function setup() {
 
-        async function catchRainbow() {
-            const response = await fetch('rainbow.jpg');
-            console.log(response);
-            const blob = await response.blob()
-            const rainbow = document.getElementById("rainbow");
-            rainbow.src = URL.createObjectURL(blob);
-        }
+            // p5.js canvas command
+            // background(255, 0, 0);
+            noCanvas();
+            // capture from the default video source
+            const video = createCapture(VIDEO);
+            video.size(320, 240);
 
-        // non-async await way of writing async functions; using .then()
-        const response = fetch('exampleText.txt').then(response => {
-            return response.blob();
-        }).then(blob => {
-            return blob.text();
-        }).then(text => console.log(text));
-    </script>
+            // script to display rainbow async
+            // catchRainbow();
 
+            // async function catchRainbow() {
+            //     const response = await fetch('rainbow.jpg');
+            //     console.log(response);
+            //     const blob = await response.blob()
+            //     const rainbow = document.getElementById("rainbow");
+            //     rainbow.src = URL.createObjectURL(blob);
+            // }
 
-    <script>
-        let position, lat, long;
-        // let position = {
-        //     coords: {
-        //         latitude: 1.3795328,
-        //         longitude: 103.8942208
-        //     },
-        // };
+            // non-async await way of writing async functions; using .then()
+            const response = fetch('exampleText.txt').then(response => {
+                return response.blob();
+            }).then(blob => {
+                return blob.text();
+            }).then(text => console.log(text));
 
-
-        // must be declared before calling the function, it's not hoisted up
-        const delay = (time) => {
-            return new Promise((resolve, reject) => {
-                if (isNaN(time)) {
-                    reject(Error("time must be a number!"));
-                }
-                setTimeout(resolve, time);
-            })
-        };
+            let position, lat, long;
+            // let position = {
+            //     coords: {
+            //         latitude: 1.3795328,
+            //         longitude: 103.8942208
+            //     },
+            // };
 
 
-        delay(10000).then((response) => console.log("Returned after 10 seconds"))
-            // console.log("test:", test);
-
-        // function delay(time) {
-        //     return new Promise((resolve, reject) => {
-        //         if (isNaN(time)) {
-        //             reject(Error("time cannot be negative"))
-        //         }
-        //         setTimeout(resolve, time);
-        //     })
-        // }
-        // resolve, not resolve(); else no delay
+            // how to write a function that returns a promise
+            // must be declared before calling the function, it's not hoisted up
+            const delay = (time) => {
+                return new Promise((resolve, reject) => {
+                    if (isNaN(time)) {
+                        reject(Error("time must be a number!"));
+                    }
+                    setTimeout(resolve, time);
+                })
+            };
 
 
+            delay(10000).then((response) => console.log("Returned after 10 seconds"))
+                // console.log("test:", test);
+
+            // function delay(time) {
+            //     return new Promise((resolve, reject) => {
+            //         if (isNaN(time)) {
+            //             reject(Error("time cannot be negative"))
+            //         }
+            //         setTimeout(resolve, time);
+            //     })
+            // }
+            // resolve, not resolve(); else no delay
 
 
-        if ('geolocation' in navigator) {
-            console.log('geolocation is available');
 
 
-            navigator.geolocation.getCurrentPosition((_position) => {
-                position = _position;
-                lat = position.coords.latitude;
-                long = position.coords.longitude;
-
-                document.getElementById('latitude').textContent = lat;
-                document.getElementById('longitude').textContent = long;
-                const map = L.map('map').setView([lat, long], 15);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                    maxZoom: 18,
-                    // id: 'mapbox/streets-v11',
-                    tileSize: 512,
-                    zoomOffset: -1
-                        // accessToken: process.env.map_accessToken
-                }).addTo(map);
+            if ('geolocation' in navigator) {
+                console.log('geolocation is available');
 
 
-                const typedMessage = document.getElementById('typed-message');
+                navigator.geolocation.getCurrentPosition((_position) => {
+                    position = _position;
+                    lat = position.coords.latitude;
+                    long = position.coords.longitude;
 
-                const submitButton = document.getElementById('submit-button');
-                const sendPositionResponse = document.getElementById('send-position-response');
+                    document.getElementById('latitude').textContent = lat;
+                    document.getElementById('longitude').textContent = long;
+                    const map = L.map('map').setView([lat, long], 15);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        maxZoom: 18,
+                        // id: 'mapbox/streets-v11',
+                        tileSize: 512,
+                        zoomOffset: -1
+                            // accessToken: process.env.map_accessToken
+                    }).addTo(map);
 
-                submitButton.onclick = async() => {
-                    console.log("button clicked", lat, long)
 
-                    const mood = typedMessage.value;
-                    const data = {
-                        lat,
-                        long,
-                        mood
+
+
+                    const typedMessage = document.getElementById('typed-message');
+
+                    const submitButton = document.getElementById('submit-button');
+                    const sendPositionResponse = document.getElementById('send-position-response');
+
+                    submitButton.onclick = async() => {
+
+                        const mood = typedMessage.value;
+                        video.loadPixels();
+                        // canvas.toDataURL() method will store an image resource
+                        const image64 = video.canvas.toDataURL();
+
+                        const data = {
+                            lat,
+                            long,
+                            mood,
+                            image64
+                        };
+
+                        L.marker([lat, long]).addTo(map);
+
+                        const options = {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(data)
+                        };
+                        // sends a fetch post request to the /api endpoint
+                        // Able to use await here because the enveloping function is set as async
+                        const response = await fetch('/api', options);
+                        // turns the response to json object
+                        const jsonObj = await response.json()
+                        console.log(jsonObj);
+                        typedMessage.value = "";
+                        sendPositionResponse.textContent = "Mood recorded: " + jsonObj.mood;
+
                     }
 
-                    L.marker([lat, long]).addTo(map);
-
-                    const options = {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(data)
-                    };
-                    // sends a fetch post request to the /api endpoint
-                    // Able to use await here because the enveloping function is set as async
-                    const response = await fetch('/api', options);
-                    // turns the response to json object
-                    const jsonObj = await response.json()
-                    console.log(jsonObj);
-                    typedMessage.value = "";
-                    sendPositionResponse.textContent = "Mood recorded: " + jsonObj.mood;
-
-                }
 
 
 
 
 
-
-            })
-
+                })
 
 
-        } else {
-            console.log('geolocation not available');
+
+            } else {
+                console.log('geolocation not available');
+            }
+
+
+
+
         }
     </script>
 

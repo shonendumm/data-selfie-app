@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const fs = require('fs')
+// const fs = require('fs')
 const Datastore = require('nedb');
 require('dotenv').config();
 // console.log(process.env.map_accessToken);
@@ -24,18 +24,9 @@ database.loadDatabase();
 
 const userDataArray = []
 
-app.get('/api', (request, response) => {
-    // finds everything in database and returns it
-    database.find({}, (err, data) => {
-        if (err) {
-            response.end();
-            return;
-        }
-        response.json(data);
-    })
 
-})
-
+// homework
+// to store the image data as a file, then store the path to the file in the database
 
 app.post('/api', (request, response) => {
     // handle the post request
@@ -61,7 +52,18 @@ function addToFile(_filename, _data) {
         })
 }
 
+// for all.html page
+app.get('/api', (request, response) => {
+    // finds everything in database and returns it
+    database.find({}, (err, data) => {
+        if (err) {
+            response.end();
+            return;
+        }
+        response.json(data);
+    })
 
+})
 
 // untill https://www.youtube.com/watch?v=3ls013DBcww&ab_channel=TheCodingTrain
 // untill https://youtu.be/q-lUgFxwjEM (lesson 2.5)
