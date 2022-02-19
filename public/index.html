@@ -138,6 +138,7 @@
                     submitButton.onclick = async() => {
 
                         const mood = typedMessage.value;
+                        // need to loadPixels from the video capture
                         video.loadPixels();
                         // canvas.toDataURL() method will store an image resource
                         const image64 = video.canvas.toDataURL();
