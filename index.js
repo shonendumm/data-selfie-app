@@ -75,7 +75,7 @@ app.get('/api', (request, response) => {
         }
         const data_copy = data;
         for (item of data_copy) {
-            item.image64 = item.image64.replace("public/", "");
+            item.image64 = item.image64.replace("public", "");
         }
         response.json(data_copy);
     })
