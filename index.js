@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-// const fs = require('fs')
+const fs = require('fs')
 const Datastore = require('nedb');
 require('dotenv').config();
 // console.log(process.env.map_accessToken);
@@ -22,8 +22,8 @@ database.loadDatabase();
 // database.insert({ name: 'soohian', status: '💪' });
 // database.insert({ name: 'soohian', status: '💡' });
 
-const userDataArray = []
-
+const userDataArray = [];
+let imageId = 0;
 
 // homework
 // to store the image data as a file, then store the path to the file in the database
@@ -33,6 +33,8 @@ app.post('/api', (request, response) => {
     const data = request.body;
     const timeNow = Date.now();
     data.timestamp = timeNow;
+    const filepath = saveImageToFolder(data);
+    data.image64 = filepath;
     database.insert(data);
     // send a json response back to client
     response.json(data);
@@ -41,6 +43,17 @@ app.post('/api', (request, response) => {
     // or save to user data array
     // userDataArray.push(data);
 });
+
+
+function saveImageToFolder(data) {
+    const image_string = data.image64.replace("data:image/png;base64,", "");
+    const buf = Buffer.from(image_string, "base64");
+    const filename = "public/capturedImages/cam_" + imageId + ".png";
+    fs.writeFile(filename, buf, (err) => { console.error(err) });
+    imageId++;
+    return filename;
+}
+
 
 
 // This is the same function as saving to nedb database. Except that one is saved with id
@@ -60,7 +73,11 @@ app.get('/api', (request, response) => {
             response.end();
             return;
         }
-        response.json(data);
+        const data_copy = data;
+        for (item of data_copy) {
+            item.image64 = item.image64.replace("public/", "");
+        }
+        response.json(data_copy);
     })
 
 })
@@ -72,3 +89,5 @@ app.get('/api', (request, response) => {
 // untill https://www.youtube.com/watch?v=nZaZ2dB6pow&list=PLRqwX-V7Uu6YxDKpFzf_2D84p0cyk4T7X&index=7&ab_channel=TheCodingTrain (check in on the map)
 
 // https://www.youtube.com/watch?v=9Rhsb3GU2Iw&list=PLRqwX-V7Uu6YxDKpFzf_2D84p0cyk4T7X&index=14&ab_channel=TheCodingTrain
+
+// 2.7 https://www.youtube.com/watch?v=1mnpn6q25FI&list=PLRqwX-V7Uu6YxDKpFzf_2D84p0cyk4T7X&index=15&ab_channel=TheCodingTrain
