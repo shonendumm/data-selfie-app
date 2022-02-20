@@ -1,0 +1,9 @@
+p {
+    padding: 10px;
+    /* background-color: #FFAAFF; */
+}
+
+#map {
+    height: 400px;
+    width: 600px;
+}

@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
 
 <head>
@@ -12,17 +8,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.js" integrity="sha512-on+Vjx6pkQ27deEPRDWBzaT7qKOG/tjLYq1Zm+1sL9/HL7jkVXOwEbZueZJFpZTQdguMIAp5D8Ewr9DLrvkmww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Data Selfie App</title>
-    <meta name="description" content="">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-    <style>
-        #map {
-            height: 400px;
-            width: 600px;
-        }
-    </style>
 
 </head>
 
@@ -32,13 +22,14 @@
         Data Selfie App
     </h1>
     <div id="map"></div>
+    <p><a href="/logs">Logs</a></p>
     <p>latitude: <span id="latitude"></span>&deg;<br/>longitude: <span id="longitude"></span>&deg;<br/></p>
 
-    <input type="text" id="typed-message">
-    <input type="submit" value="Set marker" id="submit-button">
+    <label for="typed-message">Enter your mood</label>
+    <input type="text" value="happy" id="typed-message">
+    <input type="submit" value="Submit" id="submit-button">
 
     <p><span id="send-position-response"></span></p>
-    <p>Link to <a href="/logs/all.html">all</a></p>
 
 
     <script src="sketch.js"></script>
