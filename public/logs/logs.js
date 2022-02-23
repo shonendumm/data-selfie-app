@@ -42,6 +42,7 @@ async function getData() {
         root.append(mood, geo, date, image);
         document.body.append(root);
         document.body.append(spacing);
+        // add each check-in to the map
         L.marker([item.lat, item.long]).addTo(map);
     }
 
